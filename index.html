@@ -143,7 +143,7 @@ select option{background:var(--bg3);}
 .btn-ghost:hover{color:var(--red);background:var(--red-bg);border:none;}
 .entry-table-header{display:grid;grid-template-columns:12px 130px 1fr 90px 120px 40px;gap:10px;padding:8px 14px;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);border-bottom:1px solid var(--border);margin-bottom:6px;}
 .entry-list{display:flex;flex-direction:column;gap:4px;}
-.entry-row{display:grid;grid-template-columns:12px 130px 1fr 90px 120px 40px;gap:10px;align-items:center;padding:11px 14px;border-radius:var(--r-sm);border:1px solid transparent;transition:all .15s;background:var(--bg3);}
+.entry-row{display:grid;grid-template-columns:32px 12px 120px 1fr 90px 120px 60px;gap:8px;align-items:center;padding:11px 14px;border-radius:var(--r-sm);border:1px solid transparent;transition:all .15s;background:var(--bg3);}
 .entry-row:hover{border-color:var(--border2);background:var(--surface2);}
 .entry-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .entry-cat{font-size:12px;color:var(--text2);}
@@ -218,6 +218,19 @@ select option{background:var(--bg3);}
 .filter-chip{padding:5px 14px;border-radius:20px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);font-size:12px;cursor:pointer;transition:all .15s;}
 .filter-chip:hover{color:var(--text);}
 .filter-chip.active{background:var(--gold-glow);border-color:rgba(201,168,76,.3);color:var(--gold2);}
+
+/* BULK MOVE */
+.bulk-bar{display:flex;align-items:center;gap:10px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.2);border-radius:var(--r-sm);padding:10px 14px;margin-bottom:12px;animation:fadeUp .2s ease;}
+.bulk-bar-label{font-size:13px;color:var(--gold2);flex:1;}
+.bulk-select{padding:8px 12px;background:var(--bg3);border:1px solid rgba(201,168,76,.3);border-radius:var(--r-sm);font-family:'Outfit',sans-serif;font-size:13px;color:var(--text);outline:none;}
+.bulk-select:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);}
+.btn-bulk-move{padding:8px 16px;border-radius:var(--r-sm);border:none;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0b0e;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:all .15s;}
+.btn-bulk-move:hover{box-shadow:0 4px 16px var(--gold-glow);transform:translateY(-1px);}
+.btn-bulk-cancel{padding:8px 12px;border-radius:var(--r-sm);border:1px solid var(--border2);background:none;color:var(--text2);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer;}
+.select-all-row{display:flex;align-items:center;gap:8px;padding:6px 14px;margin-bottom:6px;font-size:12px;color:var(--text2);cursor:pointer;border-radius:var(--r-sm);transition:background .15s;}
+.select-all-row:hover{background:var(--bg3);}
+.entry-checkbox{width:15px;height:15px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;}
+.entry-row.selected{background:rgba(201,168,76,0.05);border-color:rgba(201,168,76,0.2)!important;}
 ::-webkit-scrollbar{width:4px;height:4px;}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:150;}
@@ -386,7 +399,8 @@ select option{background:var(--bg3);}
           <div><div class="card-title">Extrato do Mês</div><div class="card-sub" id="entryCount"></div></div>
           <div class="filter-bar"><div class="filter-chip active" onclick="setFilter('todos',this)">Todos</div><div class="filter-chip" onclick="setFilter('receita',this)">Receitas</div><div class="filter-chip" onclick="setFilter('despesa',this)">Despesas</div></div>
         </div>
-        <div class="entry-table-header"><div></div><div>Categoria</div><div>Descrição</div><div>Data</div><div style="text-align:right">Valor</div><div></div></div>
+        <div class="entry-table-header" style="grid-template-columns:32px 12px 120px 1fr 90px 120px 60px;"><div></div><div></div><div>Categoria</div><div>Descrição</div><div>Data</div><div style="text-align:right">Valor</div><div></div></div>
+        <div id="bulkBar"></div>
         <div id="entryList"></div>
         <div id="entryTotal"></div>
       </div>
@@ -447,6 +461,19 @@ select option{background:var(--bg3);}
   </div>
 </main>
 </div>
+<!-- ── BULK MOVE MODAL ── -->
+<div class="modal-bg" id="bulkModal" style="display:none;" onclick="if(event.target===this)closeBulkModal()">
+  <div class="modal">
+    <div class="modal-title">Confirmar movimentação</div>
+    <div class="modal-sub">Essa ação moverá os lançamentos selecionados</div>
+    <div id="bulkModalInfo" style="background:var(--gold-glow);border:1px solid rgba(201,168,76,.2);border-radius:var(--r-sm);padding:12px 14px;font-size:13px;color:var(--gold2);margin-bottom:6px;line-height:1.6;"></div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeBulkModal()">Cancelar</button>
+      <button class="btn btn-gold" onclick="confirmBulkMove()" id="bulkConfirmBtn">Confirmar</button>
+    </div>
+  </div>
+</div>
+
 <!-- ── EDIT MODAL ── -->
 <div class="modal-bg" id="editModal" style="display:none;" onclick="if(event.target===this)closeEditModal()">
   <div class="modal">
@@ -734,11 +761,14 @@ function renderDashboard(){
 }
 
 function renderList(){
-  let data=[...getEntries()];
-  if(filterType!=='todos')data=data.filter(e=>e.tipo===filterType);
+  let data=getFilteredEntries();
   const total=getEntries().length;
   document.getElementById('entryCount').textContent=`${total} lançamento${total!==1?'s':''} no mês`;
-  document.getElementById('entryList').innerHTML=data.length?`<div class="entry-list">${data.map(e=>`<div class="entry-row"><div class="entry-dot" style="background:${catColor(e.cat)};"></div><div class="entry-cat">${e.cat}</div><div class="entry-desc">${e.descricao}</div><div class="entry-date">${new Date(e.created_at).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})}</div><div class="entry-val ${e.tipo==='receita'?'ev-inc':'ev-exp'}">${e.tipo==='receita'?'+':'-'}${fmt(e.val)}</div><div class="entry-actions" style="display:flex;gap:2px;"><button class="btn-edit" onclick="openEditModal('${e.id}')" title="Editar">✎</button><button class="btn btn-ghost" onclick="removeEntry('${e.id}')">✕</button></div></div>`).join('')}</div>`:`<div class="empty-state"><div class="empty-state-icon">◈</div>Nenhum lançamento encontrado.</div>`;
+  renderBulkBar();
+  const allSelected = data.length>0 && data.every(e=>selectedIds.has(e.id));
+  const someSelected = selectedIds.size>0;
+  const selectAllRow = `<div class="select-all-row" onclick="toggleSelectAll()"><input type="checkbox" class="entry-checkbox" id="selectAllCb" ${allSelected?'checked':''} ${someSelected&&!allSelected?'style="accent-color:var(--gold);"':''} onclick="event.stopPropagation();toggleSelectAll()"/><span>Selecionar todos</span></div>`;
+  document.getElementById('entryList').innerHTML=data.length?selectAllRow+`<div class="entry-list">${data.map(e=>`<div class="entry-row ${selectedIds.has(e.id)?'selected':''}" data-id="${e.id}"><input type="checkbox" class="entry-checkbox" ${selectedIds.has(e.id)?'checked':''} onclick="toggleSelect('${e.id}')"/><div class="entry-dot" style="background:${catColor(e.cat)};"></div><div class="entry-cat">${e.cat}</div><div class="entry-desc">${e.descricao}</div><div class="entry-date">${new Date(e.created_at).toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})}</div><div class="entry-val ${e.tipo==='receita'?'ev-inc':'ev-exp'}">${e.tipo==='receita'?'+':'-'}${fmt(e.val)}</div><div class="entry-actions" style="display:flex;gap:2px;"><button class="btn-edit" onclick="openEditModal('${e.id}')" title="Editar">✎</button><button class="btn btn-ghost" onclick="removeEntry('${e.id}')">✕</button></div></div>`).join('')}</div>`:`<div class="empty-state"><div class="empty-state-icon">◈</div>Nenhum lançamento encontrado.</div>`;
   const{rec,exp,saldo}=calcTotals();
   document.getElementById('entryTotal').innerHTML=getEntries().length?`<div class="total-row"><span class="total-label">Saldo do mês</span><span style="font-size:18px;font-weight:700;color:${saldo>=0?'var(--green)':'var(--red)'};">${saldo>=0?'+':'-'}${fmt(saldo)}</span></div>`:'';
 }
@@ -832,6 +862,107 @@ function goTo(name){
 function renderAll(){renderMonthLabels();renderMetrics();const active=document.querySelector('.section.active')?.id?.replace('sec-','');if(active)goTo(active);}
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('show');}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
+
+// ── BULK MOVE ────────────────────────────────────────────────────
+let selectedIds = new Set();
+let bulkTargetDate = null;
+
+function toggleSelect(id) {
+  if (selectedIds.has(id)) selectedIds.delete(id);
+  else selectedIds.add(id);
+  renderBulkBar();
+  // update row highlight
+  document.querySelectorAll('.entry-row').forEach(r => {
+    if (r.dataset.id === id) r.classList.toggle('selected', selectedIds.has(id));
+  });
+  // update select-all checkbox
+  const allCb = document.getElementById('selectAllCb');
+  if (allCb) {
+    const data = getFilteredEntries();
+    allCb.checked = data.length > 0 && data.every(e => selectedIds.has(e.id));
+    allCb.indeterminate = selectedIds.size > 0 && !allCb.checked;
+  }
+}
+
+function toggleSelectAll() {
+  const data = getFilteredEntries();
+  const allSelected = data.every(e => selectedIds.has(e.id));
+  if (allSelected) data.forEach(e => selectedIds.delete(e.id));
+  else data.forEach(e => selectedIds.add(e.id));
+  renderList();
+}
+
+function getFilteredEntries() {
+  let data = [...getEntries()];
+  if (filterType !== 'todos') data = data.filter(e => e.tipo === filterType);
+  return data;
+}
+
+function renderBulkBar() {
+  const bar = document.getElementById('bulkBar');
+  if (!bar) return;
+  if (selectedIds.size === 0) { bar.innerHTML = ''; return; }
+  const months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const now = new Date();
+  let options = '';
+  for (let i = -6; i <= 6; i++) {
+    const d = new Date(now.getFullYear(), now.getMonth() + i, 1);
+    const val = `${d.getFullYear()}-${d.getMonth()}`;
+    const label = `${months[d.getMonth()]} ${d.getFullYear()}`;
+    const sel = val === `${currentDate.getFullYear()}-${currentDate.getMonth()}` ? '' : '';
+    options += `<option value="${val}">${label}</option>`;
+  }
+  bar.innerHTML = `
+    <div class="bulk-bar">
+      <span class="bulk-bar-label">✦ ${selectedIds.size} lançamento${selectedIds.size>1?'s':''} selecionado${selectedIds.size>1?'s':''}</span>
+      <select class="bulk-select" id="bulkTargetSel">${options}</select>
+      <button class="btn-bulk-move" onclick="openBulkModal()">Mover</button>
+      <button class="btn-bulk-cancel" onclick="clearSelection()">Cancelar</button>
+    </div>`;
+}
+
+function clearSelection() {
+  selectedIds.clear();
+  renderList();
+}
+
+function openBulkModal() {
+  const sel = document.getElementById('bulkTargetSel');
+  if (!sel) return;
+  bulkTargetDate = sel.value;
+  const [yr, mo] = bulkTargetDate.split('-');
+  const months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const fromLabel = `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+  const toLabel = `${months[parseInt(mo)]} ${yr}`;
+  document.getElementById('bulkModalInfo').innerHTML = `<strong>${selectedIds.size} lançamento${selectedIds.size>1?'s':''}</strong> serão movidos de<br/><strong>${fromLabel}</strong> → <strong>${toLabel}</strong>`;
+  document.getElementById('bulkModal').style.display = 'flex';
+}
+
+function closeBulkModal() {
+  document.getElementById('bulkModal').style.display = 'none';
+}
+
+async function confirmBulkMove() {
+  if (!bulkTargetDate) return;
+  const btn = document.getElementById('bulkConfirmBtn');
+  btn.disabled = true; btn.textContent = 'Movendo…';
+  const [yr, mo] = bulkTargetDate.split('-');
+  const targetYear = parseInt(yr), targetMonth = parseInt(mo);
+  const ids = [...selectedIds];
+  for (const id of ids) {
+    const entry = entries.find(e => e.id === id);
+    if (!entry) continue;
+    const oldDate = new Date(entry.created_at);
+    const newDate = new Date(targetYear, targetMonth, oldDate.getDate(), oldDate.getHours(), oldDate.getMinutes(), oldDate.getSeconds());
+    await sb.from('entries').update({ created_at: newDate.toISOString() }).eq('id', id).eq('user_id', currentUser.id);
+    const idx = entries.findIndex(e => e.id === id);
+    if (idx !== -1) entries[idx].created_at = newDate.toISOString();
+  }
+  btn.disabled = false; btn.textContent = 'Confirmar';
+  closeBulkModal();
+  selectedIds.clear();
+  renderAll();
+}
 
 // ── EDIT MODAL ──────────────────────────────────────────────────
 let editingId = null;
