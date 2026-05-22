@@ -949,15 +949,20 @@ async function confirmBulkMove() {
   const [yr, mo] = bulkTargetDate.split('-');
   const targetYear = parseInt(yr), targetMonth = parseInt(mo);
   const ids = [...selectedIds];
-  for (const id of ids) {
+
+  // Atualiza todos de uma vez usando Promise.all
+  await Promise.all(ids.map(async id => {
     const entry = entries.find(e => e.id === id);
-    if (!entry) continue;
+    if (!entry) return;
     const oldDate = new Date(entry.created_at);
     const newDate = new Date(targetYear, targetMonth, oldDate.getDate(), oldDate.getHours(), oldDate.getMinutes(), oldDate.getSeconds());
-    await sb.from('entries').update({ created_at: newDate.toISOString() }).eq('id', id).eq('user_id', currentUser.id);
-    const idx = entries.findIndex(e => e.id === id);
-    if (idx !== -1) entries[idx].created_at = newDate.toISOString();
-  }
+    const { data } = await sb.from('entries').update({ created_at: newDate.toISOString() }).eq('id', id).eq('user_id', currentUser.id).select().single();
+    if (data) {
+      const idx = entries.findIndex(e => e.id === id);
+      if (idx !== -1) entries[idx] = data;
+    }
+  }));
+
   btn.disabled = false; btn.textContent = 'Confirmar';
   closeBulkModal();
   selectedIds.clear();
