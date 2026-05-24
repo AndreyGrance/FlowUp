@@ -231,8 +231,48 @@ select option{background:var(--bg3);}
 .select-all-row:hover{background:var(--bg3);}
 .entry-checkbox{width:15px;height:15px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;}
 .entry-row.selected{background:rgba(201,168,76,0.05);border-color:rgba(201,168,76,0.2)!important;}
-::-webkit-scrollbar{width:4px;height:4px;}
-::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
+/* ── IA ── */
+.ia-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;}
+.chat-box{background:var(--bg3);border-radius:var(--r-sm);overflow:hidden;display:flex;flex-direction:column;height:400px;}
+.chat-messages{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;}
+.chat-msg{max-width:82%;padding:10px 14px;border-radius:10px;font-size:13px;line-height:1.55;}
+.chat-msg.user{background:var(--gold-glow);border:1px solid rgba(201,168,76,.2);color:var(--gold2);align-self:flex-end;border-radius:10px 10px 2px 10px;}
+.chat-msg.ai{background:var(--surface2);border:1px solid var(--border);color:var(--text);align-self:flex-start;border-radius:10px 10px 10px 2px;}
+.chat-msg.ai.typing{color:var(--text3);}
+.chat-footer{border-top:1px solid var(--border);padding:10px 14px;display:flex;gap:8px;}
+.chat-footer input{flex:1;background:var(--bg);border:1px solid var(--border2);border-radius:var(--r-sm);padding:9px 12px;font-family:'Outfit',sans-serif;font-size:13px;color:var(--text);outline:none;}
+.chat-footer input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-glow);}
+.chat-send{background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:var(--r-sm);padding:9px 16px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;color:#0a0b0e;cursor:pointer;transition:all .15s;}
+.chat-send:hover{opacity:.9;}
+.chat-send:disabled{opacity:.5;cursor:not-allowed;}
+.suggest-chips{display:flex;flex-wrap:wrap;gap:6px;padding:10px 14px;border-bottom:1px solid var(--border);}
+.suggest-chip{padding:4px 12px;border-radius:20px;border:1px solid var(--border2);background:var(--bg3);color:var(--text2);font-size:11.5px;cursor:pointer;transition:all .15s;}
+.suggest-chip:hover{border-color:rgba(201,168,76,.3);color:var(--gold2);}
+.cat-suggestion{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--gold-glow);border:1px solid rgba(201,168,76,.2);border-radius:var(--r-sm);font-size:12.5px;color:var(--gold2);margin-top:6px;animation:fadeUp .2s ease;}
+.cat-suggestion button{background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:6px;padding:4px 12px;font-size:12px;font-weight:700;color:#0a0b0e;cursor:pointer;}
+.anomaly-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:var(--r-sm);margin-bottom:8px;}
+.anomaly-item.danger{background:var(--red-bg);border:1px solid rgba(240,108,108,.2);}
+.anomaly-item.warn{background:var(--amber-bg);border:1px solid rgba(251,191,90,.2);}
+.anomaly-item.ok{background:var(--green-bg);border:1px solid rgba(45,212,160,.2);}
+.anomaly-icon{font-size:18px;flex-shrink:0;}
+.anomaly-body{flex:1;}
+.anomaly-title{font-size:13px;font-weight:600;margin-bottom:2px;}
+.anomaly-item.danger .anomaly-title{color:var(--red);}
+.anomaly-item.warn .anomaly-title{color:var(--amber);}
+.anomaly-item.ok .anomaly-title{color:var(--green);}
+.anomaly-sub{font-size:11.5px;color:var(--text2);}
+.anomaly-badge{font-size:12px;font-weight:700;white-space:nowrap;flex-shrink:0;}
+.plan-item{display:flex;gap:14px;margin-bottom:16px;}
+.plan-num{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0b0e;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.plan-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;}
+.plan-desc{font-size:12.5px;color:var(--text2);line-height:1.55;}
+.plan-tag{display:inline-flex;margin-top:6px;padding:2px 10px;border-radius:20px;font-size:11px;font-weight:600;}
+.plan-tag.green{background:var(--green-bg);color:var(--green);border:1px solid rgba(45,212,160,.2);}
+.plan-tag.blue{background:var(--blue-bg);color:var(--blue);border:1px solid rgba(110,168,254,.2);}
+.plan-tag.gold{background:var(--gold-glow);color:var(--gold2);border:1px solid rgba(201,168,76,.2);}
+.ia-btn-gen{width:100%;padding:12px;border-radius:var(--r-sm);border:none;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#0a0b0e;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-bottom:16px;transition:all .15s;box-shadow:0 4px 16px var(--gold-glow);}
+.ia-btn-gen:hover{opacity:.9;transform:translateY(-1px);}
+.ia-btn-gen:disabled{opacity:.5;cursor:not-allowed;transform:none;}
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:150;}
 .overlay.show{display:block;}
 @media(max-width:1200px){.metrics-grid{grid-template-columns:repeat(2,1fr);}. form-row{grid-template-columns:1fr 1fr 1fr;}}
@@ -319,6 +359,7 @@ select option{background:var(--bg3);}
     <div class="nav-item" onclick="goTo('dicas')" data-page="dicas"><span class="nav-icon">◉</span> Diagnóstico</div>
     <div class="nav-item" onclick="goTo('metas')" data-page="metas"><span class="nav-icon">◐</span> Metas</div>
     <div class="nav-item" onclick="goTo('investimentos')" data-page="investimentos"><span class="nav-icon">◆</span> Investimentos</div>
+    <div class="nav-item" onclick="goTo('ia')" data-page="ia"><span class="nav-icon">✦</span> Inteligência Artificial</div>
   </nav>
   <div class="sidebar-footer">
     <div class="user-card">
@@ -493,6 +534,56 @@ select option{background:var(--bg3);}
           <div></div><div>Ativo / Instituição</div><div style="text-align:right">Tipo</div><div style="text-align:right">Investido</div><div style="text-align:right">Atual</div><div style="text-align:right">Rend.</div><div></div>
         </div>
         <div id="invList"></div>
+      </div>
+    </div>
+
+    <!-- IA -->
+    <div class="section" id="sec-ia">
+      <div class="ia-grid">
+        <!-- CHAT -->
+        <div class="card no-mb">
+          <div class="card-header">
+            <div><div class="card-title">✦ Assistente Flow IA</div><div class="card-sub">Converse sobre suas finanças em tempo real</div></div>
+            <span style="background:var(--green-bg);border:1px solid rgba(45,212,160,.2);color:var(--green);font-size:10px;font-weight:600;padding:3px 10px;border-radius:20px;">● online</span>
+          </div>
+          <div class="chat-box">
+            <div class="suggest-chips" id="chatChips">
+              <span class="suggest-chip" onclick="sendChip(this)">Qual meu score financeiro?</span>
+              <span class="suggest-chip" onclick="sendChip(this)">Onde estou gastando mais?</span>
+              <span class="suggest-chip" onclick="sendChip(this)">Como economizar esse mês?</span>
+              <span class="suggest-chip" onclick="sendChip(this)">Monte um plano para mim</span>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+              <div class="chat-msg ai">Olá! Sou o <strong>Flow IA</strong> 🤖 Tenho acesso aos seus dados financeiros e posso te ajudar a entender melhor suas finanças. O que quer saber?</div>
+            </div>
+            <div class="chat-footer">
+              <input type="text" id="chatInput" placeholder="Pergunte algo sobre suas finanças…" onkeydown="if(event.key==='Enter')sendChat()"/>
+              <button class="chat-send" id="chatSendBtn" onclick="sendChat()">Enviar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CATEGORIZAÇÃO -->
+        <div class="card no-mb">
+          <div class="card-header"><div><div class="card-title">◈ Categorização Automática</div><div class="card-sub">A IA sugere a categoria enquanto você digita</div></div></div>
+          <div class="field" style="margin-bottom:10px;">
+            <label>Descrição do lançamento</label>
+            <input type="text" id="catAiInput" placeholder="Ex: iFood jantar, Posto Shell…" oninput="debounceCatSuggest(this.value)"/>
+          </div>
+          <div id="catAiResult"></div>
+          <div class="gold-divider"></div>
+          <div class="card-title" style="font-size:13px;margin-bottom:12px;">◉ Anomalias detectadas</div>
+          <div id="anomalyList"></div>
+        </div>
+      </div>
+
+      <!-- PLANO -->
+      <div class="card">
+        <div class="card-header">
+          <div><div class="card-title">◆ Plano Financeiro Personalizado</div><div class="card-sub">A IA analisa seus dados e monta um plano de ação</div></div>
+        </div>
+        <button class="ia-btn-gen" id="planBtn" onclick="generatePlan()">✦ Gerar meu plano financeiro com IA</button>
+        <div id="planContent"></div>
       </div>
     </div>
 
@@ -759,14 +850,21 @@ async function addEntry(){
   if(!desc||isNaN(val)||val<=0){alert('Preencha todos os campos.');return;}
   const btn=document.getElementById('addBtn');
   btn.disabled=true; btn.textContent='Salvando…';
-  const now=new Date();
-  const {data,error}=await sb.from('entries').insert({user_id:currentUser.id,tipo,cat,descricao:desc,val,created_at:now.toISOString()}).select().single();
-  btn.disabled=false; btn.textContent='+ Registrar';
-  if(error){alert('Erro ao salvar: '+error.message);return;}
-  entries.unshift(data);
-  document.getElementById('descricao').value='';
-  document.getElementById('valor').value='';
-  renderAll();
+  try {
+    const now=new Date();
+    const timeout = new Promise((_,reject)=>setTimeout(()=>reject(new Error('Tempo esgotado. Verifique sua conexão.')),10000));
+    const request = sb.from('entries').insert({user_id:currentUser.id,tipo,cat,descricao:desc,val,created_at:now.toISOString()}).select().single();
+    const {data,error} = await Promise.race([request,timeout]);
+    if(error) throw new Error(error.message);
+    entries.unshift(data);
+    document.getElementById('descricao').value='';
+    document.getElementById('valor').value='';
+    renderAll();
+  } catch(e) {
+    alert('Erro ao salvar: '+e.message);
+  } finally {
+    btn.disabled=false; btn.textContent='+ Registrar';
+  }
 }
 
 async function removeEntry(id){
@@ -969,7 +1067,7 @@ function renderMetas(){
 // ══════════════════════════════════════════════════════════════════
 // NAVEGAÇÃO
 // ══════════════════════════════════════════════════════════════════
-const PAGE_INFO={dashboard:{title:'Painel Geral',sub:'Visão executiva do mês'},lancamentos:{title:'Lançamentos',sub:'Registre e gerencie suas movimentações'},relatorio:{title:'Relatórios',sub:'Gráficos e distribuição detalhada'},orcamento:{title:'Orçamento 50/30/20',sub:'Compare seu perfil com o modelo ideal'},dicas:{title:'Diagnóstico',sub:'Análise personalizada de saúde financeira'},metas:{title:'Metas Financeiras',sub:'Objetivos e progresso de longo prazo'},investimentos:{title:'Investimentos',sub:'Gerencie sua carteira de ativos'}};
+const PAGE_INFO={dashboard:{title:'Painel Geral',sub:'Visão executiva do mês'},lancamentos:{title:'Lançamentos',sub:'Registre e gerencie suas movimentações'},relatorio:{title:'Relatórios',sub:'Gráficos e distribuição detalhada'},orcamento:{title:'Orçamento 50/30/20',sub:'Compare seu perfil com o modelo ideal'},dicas:{title:'Diagnóstico',sub:'Análise personalizada de saúde financeira'},metas:{title:'Metas Financeiras',sub:'Objetivos e progresso de longo prazo'},investimentos:{title:'Investimentos',sub:'Gerencie sua carteira de ativos'},ia:{title:'Inteligência Artificial',sub:'Assistente IA, categorização automática e plano financeiro'}};
 function goTo(name){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
@@ -985,11 +1083,174 @@ function goTo(name){
   if(name==='dicas')renderDicas();
   if(name==='metas')renderMetas();
   if(name==='investimentos')renderInvestimentos();
+  if(name==='ia')renderIA();
   closeSidebar();
 }
 function renderAll(){renderMonthLabels();renderMetrics();const active=document.querySelector('.section.active')?.id?.replace('sec-','');if(active)goTo(active);}
 function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('show');}
 function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('show');}
+
+// ── INTELIGÊNCIA ARTIFICIAL ───────────────────────────────────────
+const ANTHROPIC_API = 'https://api.anthropic.com/v1/messages';
+
+function buildFinancialContext() {
+  const {rec,exp,saldo} = calcTotals();
+  const bycat = groupBy('despesa');
+  const score = calcScore();
+  const months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const mes = `${months[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+  const catStr = Object.entries(bycat).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`${c}: ${fmt(v)}`).join(', ');
+  const recCats = Object.entries(groupBy('receita')).map(([c,v])=>`${c}: ${fmt(v)}`).join(', ');
+  return `Você é o Flow IA, assistente financeiro pessoal do app Flow Up. Dados do usuário em ${mes}: Receitas: ${fmt(rec)} (${recCats||'nenhuma'}). Despesas: ${fmt(exp)} (${catStr||'nenhuma'}). Saldo: ${fmt(saldo)}. Score de saúde financeira: ${score}/100. Metas: ${metas.length} metas cadastradas. Investimentos: ${investimentos.length} ativos (patrimônio: ${fmt(investimentos.reduce((s,i)=>s+i.valor_atual,0))}). Responda sempre em português brasileiro, de forma direta, amigável e personalizada com base nesses dados reais. Máximo 3 parágrafos curtos.`;
+}
+
+let chatHistory = [];
+
+async function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  appendChatMsg('user', msg);
+  chatHistory.push({role:'user', content: msg});
+  const btn = document.getElementById('chatSendBtn');
+  btn.disabled = true;
+  const typingEl = appendChatMsg('ai', 'Analisando seus dados…', true);
+  try {
+    const res = await fetch(ANTHROPIC_API, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,system:buildFinancialContext(),messages:chatHistory})
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || 'Desculpe, não consegui processar sua pergunta.';
+    typingEl.textContent = reply;
+    typingEl.classList.remove('typing');
+    chatHistory.push({role:'assistant', content: reply});
+  } catch(e) { typingEl.textContent = 'Erro ao conectar com a IA. Tente novamente.'; }
+  btn.disabled = false;
+  const msgs = document.getElementById('chatMessages');
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function appendChatMsg(type, text, typing=false) {
+  const msgs = document.getElementById('chatMessages');
+  const el = document.createElement('div');
+  el.className = `chat-msg ${type}${typing?' typing':''}`;
+  el.textContent = text;
+  msgs.appendChild(el);
+  msgs.scrollTop = msgs.scrollHeight;
+  return el;
+}
+
+function sendChip(el) { document.getElementById('chatInput').value = el.textContent; sendChat(); }
+
+let catDebounce = null;
+function debounceCatSuggest(val) {
+  clearTimeout(catDebounce);
+  document.getElementById('catAiResult').innerHTML = '';
+  if (val.length < 4) return;
+  catDebounce = setTimeout(() => suggestCategory(val), 700);
+}
+
+async function suggestCategory(desc) {
+  const el = document.getElementById('catAiResult');
+  el.innerHTML = '<div style="font-size:12px;color:var(--text3);">Analisando…</div>';
+  const cats = CATS.despesa.concat(CATS.receita).join(', ');
+  try {
+    const res = await fetch(ANTHROPIC_API, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:30,messages:[{role:'user',content:`Classifique este lançamento financeiro: "${desc}". Responda SOMENTE com o nome exato de uma dessas categorias: ${cats}`}]})
+    });
+    const data = await res.json();
+    const cat = data.content?.[0]?.text?.trim() || '';
+    if (cat) {
+      el.innerHTML = `<div class="cat-suggestion"><span>◈ Sugestão: <strong>${cat}</strong></span><button onclick="applyCatSuggestion('${cat.replace(/'/g,"\\'")}','${desc.replace(/'/g,"\\'")}')">✓ Usar</button></div>`;
+    }
+  } catch(e) { el.innerHTML = ''; }
+}
+
+function applyCatSuggestion(cat, desc) {
+  goTo('lancamentos');
+  setTimeout(() => {
+    document.getElementById('descricao').value = desc;
+    const tipo = CATS.receita.includes(cat) ? 'receita' : 'despesa';
+    document.getElementById('tipo').value = tipo;
+    updateCats();
+    document.getElementById('categoria').value = cat;
+    document.getElementById('catAiInput').value = '';
+    document.getElementById('catAiResult').innerHTML = '';
+  }, 300);
+}
+
+function renderAnomalies() {
+  const el = document.getElementById('anomalyList');
+  if (!el) return;
+  const {rec, exp} = calcTotals();
+  const bycat = groupBy('despesa');
+  const anomalies = [];
+  Object.entries(bycat).forEach(([cat, val]) => {
+    const pct = rec > 0 ? val/rec : 0;
+    if (cat === 'Restaurante / Delivery' && pct > 0.15) anomalies.push({type:'danger',icon:'▽',title:'Delivery acima do normal',sub:`${fmt(val)} — ${Math.round(pct*100)}% da renda`,badge:`+${Math.round((pct-0.1)*100)}%`});
+    if ((cat === 'Cartão de Crédito' || cat === 'Empréstimo Pessoal') && pct > 0.25) anomalies.push({type:'danger',icon:'◻',title:'Dívidas comprometendo a renda',sub:`${fmt(val)} — ${Math.round(pct*100)}% da renda`,badge:'Alto risco'});
+    if (cat === 'Lazer' && pct > 0.2) anomalies.push({type:'warn',icon:'◎',title:'Lazer acima do recomendado',sub:`${fmt(val)} — ${Math.round(pct*100)}% da renda`,badge:`${Math.round(pct*100)}%`});
+  });
+  if (exp > rec && rec > 0) anomalies.push({type:'danger',icon:'⚠',title:'Gastos maiores que a renda!',sub:`Déficit de ${fmt(exp-rec)} este mês`,badge:'Crítico'});
+  if (rec > 0 && (rec-exp)/rec >= 0.2) anomalies.push({type:'ok',icon:'✓',title:'Boa taxa de poupança',sub:`${Math.round((rec-exp)/rec*100)}% da renda economizada`,badge:'Ótimo'});
+  el.innerHTML = anomalies.length
+    ? anomalies.map(a=>`<div class="anomaly-item ${a.type}"><div class="anomaly-icon">${a.icon}</div><div class="anomaly-body"><div class="anomaly-title">${a.title}</div><div class="anomaly-sub">${a.sub}</div></div><div class="anomaly-badge" style="color:${a.type==='danger'?'var(--red)':a.type==='warn'?'var(--amber)':'var(--green)'};">${a.badge}</div></div>`).join('')
+    : '<div style="font-size:13px;color:var(--text3);padding:8px 0;">Nenhuma anomalia detectada ✓</div>';
+}
+
+async function generatePlan() {
+  const btn = document.getElementById('planBtn');
+  const content = document.getElementById('planContent');
+  btn.disabled = true; btn.textContent = '✦ Gerando seu plano…';
+  content.innerHTML = '<div style="font-size:13px;color:var(--text3);padding:16px 0;text-align:center;">A IA está analisando seus dados…</div>';
+  try {
+    const res = await fetch(ANTHROPIC_API, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,messages:[{role:'user',content:buildFinancialContext()+'\n\nCrie um plano financeiro personalizado com 4 passos. Para cada passo:\n1. Título curto\nDescrição em 2 frases baseada nos dados reais.\nPrioridade: [alta/média/baixa] · Valor ou prazo estimado\n\nSeja específico e use os valores reais do usuário.'}]})
+    });
+    const data = await res.json();
+    const text = data.content?.[0]?.text || '';
+    content.innerHTML = parsePlan(text);
+  } catch(e) { content.innerHTML = '<div style="color:var(--red);font-size:13px;">Erro ao gerar plano. Tente novamente.</div>'; }
+  btn.disabled = false; btn.textContent = '✦ Gerar meu plano financeiro com IA';
+}
+
+function parsePlan(text) {
+  const lines = text.split('\n').filter(l=>l.trim());
+  const colors = ['green','blue','gold','green'];
+  let html = '<div style="display:flex;flex-direction:column;gap:16px;">';
+  let num = 0;
+  lines.forEach((line, i) => {
+    const m = line.match(/^(\d+)[.\)]\s*\*{0,2}(.+?)\*{0,2}$/);
+    if (m) {
+      num++;
+      const desc = lines[i+1]?.trim() || '';
+      const tag = lines[i+2]?.trim() || '';
+      html += `<div class="plan-item"><div class="plan-num">${m[1]}</div><div><div class="plan-title">${m[2]}</div><div class="plan-desc">${desc}</div>${tag?`<span class="plan-tag ${colors[num-1]||'gold'}">${tag.replace(/Prioridade:\s*/,'')}</span>`:''}</div></div>`;
+    }
+  });
+  html += '</div>';
+  return num > 0 ? html : `<div style="font-size:13px;color:var(--text2);line-height:1.7;">${text.replace(/\n/g,'<br/>')}</div>`;
+}
+
+function renderIA() {
+  renderAnomalies();
+  chatHistory = [];
+  const msgs = document.getElementById('chatMessages');
+  if(msgs) msgs.innerHTML = '<div class="chat-msg ai">Olá! Sou o <strong>Flow IA</strong> 🤖 Tenho acesso aos seus dados financeiros e posso te ajudar. O que quer saber?</div>';
+  const planContent = document.getElementById('planContent');
+  if(planContent) planContent.innerHTML = '';
+  const catInput = document.getElementById('catAiInput');
+  if(catInput) catInput.value = '';
+  const catResult = document.getElementById('catAiResult');
+  if(catResult) catResult.innerHTML = '';
+}
 
 // ── BULK MOVE ────────────────────────────────────────────────────
 let selectedIds = new Set();
