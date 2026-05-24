@@ -851,10 +851,12 @@ async function addEntry(){
   const btn=document.getElementById('addBtn');
   btn.disabled=true; btn.textContent='Salvando…';
   try {
+    // Usa o mês/ano atualmente selecionado, não a data de hoje
     const now=new Date();
-    const timeout = new Promise((_,reject)=>setTimeout(()=>reject(new Error('Tempo esgotado. Verifique sua conexão.')),10000));
-    const request = sb.from('entries').insert({user_id:currentUser.id,tipo,cat,descricao:desc,val,created_at:now.toISOString()}).select().single();
-    const {data,error} = await Promise.race([request,timeout]);
+    const entryDate=new Date(currentDate.getFullYear(), currentDate.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
+    const timeout=new Promise((_,reject)=>setTimeout(()=>reject(new Error('Tempo esgotado. Verifique sua conexão.')),10000));
+    const request=sb.from('entries').insert({user_id:currentUser.id,tipo,cat,descricao:desc,val,created_at:entryDate.toISOString()}).select().single();
+    const {data,error}=await Promise.race([request,timeout]);
     if(error) throw new Error(error.message);
     entries.unshift(data);
     document.getElementById('descricao').value='';
